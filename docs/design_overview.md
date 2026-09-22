@@ -73,6 +73,42 @@ DynamoDB（On-Demandキャパシティ）
 
 チーム情報・参加コードのマッピング・チームごとのバトン履歴を、1つのテーブルで管理する。
 
+### ER図（概念図）
+
+DynamoDBは単一テーブル設計のため厳密なリレーショナルER図ではないが、エンティティ間の関係を概念的に示す。
+
+```mermaid
+erDiagram
+    TEAM ||--o{ TURN : "持つ"
+    TEAM ||--|| JOIN_CODE : "参加コードで引ける"
+
+    TEAM {
+        string teamId PK "UUIDv4"
+        string teamName
+        string joinCode
+        string_array members "重複可"
+        string createdBy
+    }
+    JOIN_CODE {
+        string joinCode PK "英数字6桁・グローバル一意"
+        string teamId FK
+    }
+    TURN {
+        string teamId FK
+        int turnNumber PK "TEAM内で連番"
+        float startLatitude
+        float startLongitude
+        string startUserName
+        string startInputMethod "gps/nfc"
+        float endLatitude "受け取り前はnull"
+        float endLongitude "受け取り前はnull"
+        string endUserName "受け取り前はnull"
+        string endInputMethod "受け取り前はnull"
+    }
+```
+
+物理的なDynamoDBキー設計は以下の通り。
+
 ### チーム情報
 
 ```json
