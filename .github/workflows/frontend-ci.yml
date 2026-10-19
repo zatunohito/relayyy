@@ -32,8 +32,14 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Biome
+        run: bun run lint
+
+      - name: Knip
+        run: bun run knip
+
       - name: Typecheck
-        run: bunx tsc --noEmit
+        run: bun run typecheck
 
       - name: Build (web export)
         run: bunx expo export --platform web
