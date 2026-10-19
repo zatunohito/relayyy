@@ -1,0 +1,4 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "ignoreDependencies": ["expo-glass-effect", "expo-status-bar", "expo-updates"]
+}
